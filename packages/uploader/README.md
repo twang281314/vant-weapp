@@ -18,13 +18,9 @@
 
 文件上传完毕后会触发`after-read`回调函数，获取到对应的文件的临时地址，然后再使用`wx.uploadFile`将图片上传到远程服务器上
 
-#### wxml 示例
-
 ```html
 <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" />
 ```
-
-#### js 示例
 
 ```js
 Page({
@@ -39,8 +35,8 @@ Page({
         url: 'https://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
         filePath: file.path,
         name: 'file',
-        formData: { 'user': 'test' },
-        success (res){
+        formData: { user: 'test' },
+        success(res) {
           // 上传完成需要更新 fileList
           const { fileList = [] } = this.data;
           fileList.push({ ...file, url: res.data });
@@ -67,7 +63,11 @@ Page({
       { url: 'https://img.yzcdn.cn/vant/leaf.jpg', name: '图片1' },
       // Uploader 根据文件后缀来判断是否为图片文件
       // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
-      { url: 'http://iph.href.lu/60x60?text=default', name: '图片2', isImage: true }
+      {
+        url: 'http://iph.href.lu/60x60?text=default',
+        name: '图片2',
+        isImage: true
+      }
     ]
   }
 });
@@ -123,6 +123,44 @@ Page({
 });
 ```
 
+## 云开发示例
+
+### 上传图片至云存储
+
+在开发中，可以利用[小程序云开发](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)的云存储能力，将图片上传至云存储内。然后根据返回的`fileiId`来下载图片、删除图片和替换临时链接。
+
+```js
+// 上传图片
+uploadToCloud() {
+  wx.cloud.init();
+  const { fileList } = this.data;
+  if (!fileList.length) {
+    wx.showToast({ title: '请选择图片', icon: 'none' });
+  } else {
+    const uploadTasks = fileList.map((file, index) => this.uploadFilePromise(`my-photo${index}.png`, file));
+    Promise.all(uploadTasks)
+      .then(data => {
+        wx.showToast({ title: '上传成功', icon: 'none' });
+        const newFileList = data.map(item => { url: item.fileID });
+        this.setData({ cloudPath: data, fileList: newFileList });
+      })
+      .catch(e => {
+        wx.showToast({ title: '上传失败', icon: 'none' });
+        console.log(e);
+      });
+  }
+}
+
+uploadFilePromise(fileName, chooseResult) {
+  return wx.cloud.uploadFile({
+    cloudPath: fileName,
+    filePath: chooseResult.path
+  });
+}
+```
+
+## API
+
 ### Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
@@ -141,7 +179,6 @@ Page({
 | max-count | 文件上传数量限制 | *number* | - | - |
 | upload-text | 上传区域文字提示 | *string* | - | - |
 | image-fit | 预览图裁剪模式，可选值参考小程序`image`组件的`mode`属性 | *string* | `scaleToFill` | - |
-
 ### Slot
 
 | 名称 | 说明 |

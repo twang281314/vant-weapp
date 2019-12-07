@@ -1,5 +1,91 @@
 # 更新日志
 
+### [v1.0.0-beta.6](https://github.com/youzan/vant-weapp/tree/v1.0.0-beta.6)
+
+#### 新特性与优化
+
+##### Sidebar
+
+- 修复 SidebarItem 重渲染后 change 事件返回索引值错误
+- 修复文档错误，重命名 active 属性为 activeKey
+
+##### Stepper
+
+- 新增 disablePlus、disableMinus属性
+
+##### TreeSelect
+
+- 修复动态设置 mainActiveIndex 无效
+
+##### Overlay
+
+- 支持嵌入内容
+
+##### Image
+
+- 修复部分图片在iOS设备中无法显示
+
+##### DropdownMenu
+
+- 修复动态设置 value 无效
+
+##### Uploader
+
+- 文档增加上传云存储示例
+
+##### Rate
+
+- 修复开启 allow-half 时显示异常
+
+### [v1.0.0-beta.5](https://github.com/youzan/vant-weapp/tree/v1.0.0-beta.5)
+
+#### 主要变动
+
+- 包名由 vant-weapp 重命名为 @vant/weapp
+- 增加多个颜色变量
+- 增加多个 API
+- 修复多个问题
+
+#### 新特性与优化
+
+##### SwipeCell
+
+- 新增 open 事件
+- 不再 catch touchend 事件
+
+##### Uploader
+
+- 新增 deletable 属性
+- 修复 preview-size px单位重复
+- 更新样式
+
+##### Image
+
+- 新增 radius 属性
+- 支持动态设置 width 、 height 属性
+
+##### Tab
+
+- 修复离开页面时组件报错
+- 修复初始设置的 active 属性失效
+- 增加云开发结合示例
+
+##### Notify
+
+- 修复安卓设备中 safe-area-inset-top 属性不生效
+
+##### Grid
+
+- 修复同时设置 gutter square 属性时样式异常
+
+##### Skeleton
+
+- 修复 row 属性不生效
+
+##### Stepper
+
+- 修复禁用样式错误
+
 ### [v1.0.0-beta.4](https://github.com/youzan/vant-weapp/tree/v1.0.0-beta.4)
 
 #### 主要变动
